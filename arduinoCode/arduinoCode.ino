@@ -17,6 +17,14 @@ void setup() {
 }
 
 void loop() {
+
+   
+  int a  = // read a from mobile 
+
+  a += 4;
+  
+
+  // return a back 
   
 
 }
