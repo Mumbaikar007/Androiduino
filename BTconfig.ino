@@ -1,0 +1,30 @@
+#include <SoftwareSerial.h>
+
+#define rx_pin 10
+#define tx_pin 11
+
+SoftwareSerial mySerial(rx_pin, tx_pin); // RX, TX
+
+void setup() {
+  // Open serial communications and wait for port to open:
+  Serial.begin(9600);
+  while (!Serial) {
+    ; // wait for serial port to connect. Needed for native USB port only
+  }
+
+
+  Serial.println("Setup running");
+
+  // set the data rate for the SoftwareSerial port
+  mySerial.begin(38400);
+  
+}
+
+void loop() { // run over and over
+  if (mySerial.available()) {
+    Serial.write(mySerial.read());
+  }
+  if (Serial.available()) {
+    mySerial.write(Serial.read());
+  }
+}
