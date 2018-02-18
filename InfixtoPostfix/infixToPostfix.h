@@ -1,7 +1,8 @@
 
 
-# include <iostream>
-# include <stack>
+//# include <iostream>
+//# include <stack>
+#include <StackArray.h>
 
 
 using namespace std;
@@ -22,10 +23,10 @@ int Priority ( char operand ){
     }
 }
 
-string MakePostfix ( string equation ){
+String MakePostfix ( String equation ){
 
-    string postfix = "";
-    stack <char> stack1;
+    String postfix = "";
+    StackArray <char> stack1;
 
     for ( char i : equation ){
 
@@ -34,9 +35,9 @@ string MakePostfix ( string equation ){
         }
 
         else if ( i == ')'){
-            while ( stack1.top() != '('){
-                postfix += stack1.top();
-                stack1.pop();
+            while ( stack1.peek() != '('){
+                postfix += stack1.pop();
+                
             }
             stack1.pop();
         }
@@ -47,13 +48,13 @@ string MakePostfix ( string equation ){
 
         else {
 
-            if ( stack1.empty() ){
+            if ( stack1.isEmpty() ){
                 stack1.push(i);
             }
             else {
-                while ( !stack1.empty() && stack1.top() != '(' && Priority(i) <= Priority(stack1.top()) ){
-                    postfix += stack1.top();
-                    stack1.pop();
+                while ( !stack1.isEmpty() && stack1.peek() != '(' && Priority(i) <= Priority(stack1.peek()) ){
+                    postfix += stack1.pop();
+                    ;
                 }
                 stack1.push(i);
             }
@@ -61,16 +62,16 @@ string MakePostfix ( string equation ){
 
     }
 
-    while ( !stack1.empty() ){
-        postfix += stack1.top();
-        stack1.pop();
+    while ( !stack1.isEmpty() ){
+        postfix += stack1.pop();
+        
     }
 
     return postfix;
 
 }
 
-
+/*
 int main(){
 
     string equation = "a+b-c*d";
@@ -82,3 +83,4 @@ int main(){
 
     return 0;
 }
+*/
