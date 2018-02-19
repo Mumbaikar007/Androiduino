@@ -3,17 +3,26 @@
 */
 
 #include<SoftwareSerial.h>
+# include "infixToPostfix.h"
 
 #define rx 10
 #define tx 11
 
 SoftwareSerial BT(rx,tx); //RX,TX
 
+String equation;
 void incomingBTdata();
 
 void setup() {
- Serial.begin(9600);
- BT.begin(9600);
+  
+  Serial.begin(9600);
+  BT.begin(38400);
+  equation = "";
+  
+}
+
+bool isOperator ( char a){
+  return ( a == '+' || a == '-' || a == '*' || a == '/' || a== '(' || a == ')' ) ? true : false;
 }
 
 void loop() {
@@ -21,17 +30,40 @@ void loop() {
 
   while(!BT.available());
   
-  //int a  = // read a from mobile 
   char a;
   a = BT.read();
+
+  //Serial.print(a);
+
   
-  Serial.print(a);
+  if ( a == '@'){
+
+    Serial.print ( "Equation is : ");
+    Serial.println( equation );
+
+    String postfix = MakePostfix( equation ); 
+    
+    Serial.print ( "Postfix is : ");
+    Serial.println( postfix );
+
+    int answer = SolvePostfix ( postfix );
+    
+    Serial.print( "Answer is: ");
+    Serial.println ( answer );
+
+    BT.write(answer);
+    
+    equation = "";
   
-  //a += 4;
+  }
+  else {
+
+    if ( (a >= '0' && a <= '9') || isOperator(a) )
+      equation += a;
+    
+  }
   
 
-  // return a back 
-  
 
 }
 
