@@ -1,9 +1,6 @@
 #include <SoftwareSerial.h>
 
-#define rx_pin 10
-#define tx_pin 11
-
-SoftwareSerial mySerial(rx_pin, tx_pin); // RX, TX
+SoftwareSerial mySerial(10, 11); // RX, TX
 
 void setup() {
   // Open serial communications and wait for port to open:
@@ -28,3 +25,4 @@ void loop() { // run over and over
     mySerial.write(Serial.read());
   }
 }
+
