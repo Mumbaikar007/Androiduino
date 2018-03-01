@@ -7,7 +7,7 @@ import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.util.UUID;
 
-
+/*
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     // MAC-address of Bluetooth module (you must edit this line)
-    private static String address = "00:15:FF:F2:19:5F";
+    private static String address = "98:D3:33:80:A1:93";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,19 +182,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
-
-
-/*
-
-package com.example.bluetooth2;
+*/
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.util.UUID;
-
-import com.example.bluetooth2.R;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -229,7 +223,7 @@ public class MainActivity extends Activity {
   private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
   // MAC-address of Bluetooth module (you must edit this line)
-  private static String address = "00:15:FF:F2:19:5F";
+  private static String address = "98:D3:33:80:A1:93";
 
   // Called when the activity is first created.
 @Override
@@ -238,19 +232,24 @@ public void onCreate(Bundle savedInstanceState) {
 
     setContentView(R.layout.activity_main);
 
-    btnOn = (Button) findViewById(R.id.btnOn);                  // button LED ON
-    btnOff = (Button) findViewById(R.id.btnOff);                // button LED OFF
+    btnOn = (Button) findViewById(R.id.butOn);                  // button LED ON
+    btnOff = (Button) findViewById(R.id.butOff);                // button LED OFF
     txtArduino = (TextView) findViewById(R.id.txtArduino);      // for display the received data from the Arduino
 
-    h = new Handler() {
+    h = new  Handler() {
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
                 case RECIEVE_MESSAGE:                                                   // if receive massage
+                    Log.d(TAG, "Receiving data");
+
                     byte[] readBuf = (byte[]) msg.obj;
+
                     String strIncom = new String(readBuf, 0, msg.arg1);                 // create string from bytes array
+                    txtArduino.setText("Data from Arduino: " + strIncom);
                     sb.append(strIncom);                                                // append string
                     int endOfLineIndex = sb.indexOf("\r\n");                            // determine the end-of-line
                     if (endOfLineIndex > 0) {                                            // if end-of-line,
+                        Log.d(TAG, "eol > 0");
                         String sbprint = sb.substring(0, endOfLineIndex);               // extract string
                         sb.delete(0, sb.length());                                      // and clear
                         txtArduino.setText("Data from Arduino: " + sbprint);            // update TextView
@@ -268,7 +267,7 @@ public void onCreate(Bundle savedInstanceState) {
 
     btnOn.setOnClickListener(new OnClickListener() {
         public void onClick(View v) {
-            btnOn.setEnabled(false);
+            //btnOn.setEnabled(false);
             mConnectedThread.write("1");    // Send "1" via Bluetooth
             //Toast.makeText(getBaseContext(), "Turn on LED", Toast.LENGTH_SHORT).show();
         }
@@ -276,7 +275,7 @@ public void onCreate(Bundle savedInstanceState) {
 
     btnOff.setOnClickListener(new OnClickListener() {
         public void onClick(View v) {
-            btnOff.setEnabled(false);
+            //btnOff.setEnabled(false);
             mConnectedThread.write("0");    // Send "0" via Bluetooth
             //Toast.makeText(getBaseContext(), "Turn off LED", Toast.LENGTH_SHORT).show();
         }
@@ -420,5 +419,3 @@ private class ConnectedThread extends Thread {
     }
 }
 }
-
-*/
