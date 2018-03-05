@@ -20,11 +20,9 @@ void loop()
 {
 
 if (mySerial.available())
-
-Serial.write(mySerial.read());
+  Serial.write(mySerial.read());
 
 if (Serial.available())
-
-mySerial.write(Serial.read());
+  mySerial.write(Serial.read());
 
 }
